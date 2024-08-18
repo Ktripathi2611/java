@@ -9,7 +9,7 @@ public class CRMApplication {
         frame.setLayout(new GridBagLayout());
 
         // Set the size to 1920x1080
-        frame.setSize(400, 600);
+        frame.setSize(1920, 1080);
         frame.setResizable(false);
 
         // Set the background color to a light gray
@@ -22,13 +22,26 @@ public class CRMApplication {
         headerPanel.setPreferredSize(new Dimension(1920, 96)); // 1 inch = 96 pixels at 96 DPI
         headerPanel.setBackground(new Color(70, 130, 180)); // Steel blue color
 
-        JLabel headerLabel = new JLabel("Welcome to CRM");
-        headerLabel.setForeground(Color.WHITE);
-        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        // Create a panel for the header items
+        JPanel headerItemsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        headerItemsPanel.setOpaque(false);
 
-        // Add components to the header panel
-        headerPanel.add(headerLabel, BorderLayout.CENTER);
+        // Add header items from left to right as buttons
+        String[] headerItems = {
+            "Dashboard", "Tasks", "Calendar", "Recent Activities", "Sales Pipeline",
+            "Notifications", "Leads", "Opportunities", "Customer Support Tickets",
+            "Reports", "Email Inbox", "Social Media Feeds", "Notes", "Custom Widgets"
+        };
+
+        for (String item : headerItems) {
+            JButton button = new JButton(item);
+            button.setBackground(Color.WHITE);
+            button.setForeground(new Color(70, 130, 180));
+            headerItemsPanel.add(button);
+        }
+
+        // Add the header items panel to the header panel
+        headerPanel.add(headerItemsPanel, BorderLayout.CENTER);
 
         // Add additional components to the header if needed
         JButton logoutButton = new JButton("Logout");
@@ -50,45 +63,34 @@ public class CRMApplication {
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY)); // Add border for better visual separation
 
         // Add CRM components
-        JLabel customerLabel = new JLabel("Customer Name:");
-        JTextField customerField = new JTextField(20);
-        JLabel contactLabel = new JLabel("Contact Number:");
-        JTextField contactField = new JTextField(20);
-        JLabel emailLabel = new JLabel("Email:");
-        JTextField emailField = new JTextField(20);
-        JButton saveButton = new JButton("Save");
+        String[] components = {
+            "Dashboard: Provides an overview of key metrics and performance indicators.",
+            "Tasks: Lists upcoming tasks and to-dos.",
+            "Calendar: Displays scheduled meetings, calls, and events.",
+            "Recent Activities: Shows recent interactions and updates.",
+            "Sales Pipeline: Visualizes the current status of sales opportunities.",
+            "Notifications: Alerts for important updates and reminders.",
+            "Leads: Lists new and active leads.",
+            "Opportunities: Tracks potential sales opportunities.",
+            "Customer Support Tickets: Displays open and recent support tickets.",
+            "Reports: Quick access to frequently used reports.",
+            "Email Inbox: Integrates email communications.",
+            "Social Media Feeds: Shows recent social media interactions.",
+            "Notes: Allows for quick note-taking and reminders.",
+            "Custom Widgets: Any additional custom components tailored to specific needs."
+        };
 
-        // Set constraints for CRM components
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(5, 5, 5, 5);
-        contentPanel.add(customerLabel, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        contentPanel.add(customerField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        contentPanel.add(contactLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        contentPanel.add(contactField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        contentPanel.add(emailLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        contentPanel.add(emailField, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        contentPanel.add(saveButton, gbc);
+        for (String component : components) {
+            JLabel label = new JLabel(component);
+            contentPanel.add(label, gbc);
+            gbc.gridy++;
+        }
 
         // Set constraints for the content panel
         gbc.gridx = 0;
