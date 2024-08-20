@@ -33,6 +33,9 @@ public class CRMApplication {
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
+        // Add header to the content panel
+        addHeaderToContentPanel();
+
         // Add buttons to the content panel
         addButtonsToContentPanel();
 
@@ -72,6 +75,18 @@ public class CRMApplication {
         return topPanel;
     }
 
+    private static void addHeaderToContentPanel() {
+        JLabel headerLabel = new JLabel("This is Home Page");
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        headerLabel.setForeground(new Color(70, 130, 180));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 4; // Span across all columns
+        contentPanel.add(headerLabel, gbc);
+    }
+
     private static void addButtonsToContentPanel() {
         String[] buttonLabels = {
             "Dashboard", "Tasks", "Calendar", "Recent Activities", "Sales Pipeline",
@@ -84,7 +99,7 @@ public class CRMApplication {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1; // Start from the second row
 
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
