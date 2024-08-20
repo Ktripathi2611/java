@@ -18,14 +18,13 @@ public class CRMApplication {
         frame.setResizable(true);
         frame.setBackground(new Color(245, 245, 245));
 
-        // Create the scrollable header
-        JScrollPane headerScrollPane = createScrollableHeader();
-        frame.add(headerScrollPane, BorderLayout.NORTH);
-
         // Create and set the content panel
         contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
+        // Add buttons to the content panel
+        addButtonsToContentPanel();
 
         frame.add(contentPanel, BorderLayout.CENTER);
 
@@ -38,27 +37,8 @@ public class CRMApplication {
         frame.setVisible(true);
     }
 
-    private static JScrollPane createScrollableHeader() {
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new GridBagLayout());
-        headerPanel.setBackground(new Color(245, 245, 245));
-
-        JMenuBar menuBar = createMenuBar();
-        headerPanel.add(menuBar);
-
-        JScrollPane scrollPane = new JScrollPane(headerPanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBorder(null); // Remove border for better appearance
-
-        return scrollPane;
-    }
-
-    private static JMenuBar createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(70, 130, 180));
-        menuBar.setForeground(Color.WHITE);
-
-        String[] menuItems = {
+    private static void addButtonsToContentPanel() {
+        String[] buttonLabels = {
             "Dashboard", "Tasks", "Calendar", "Recent Activities", "Sales Pipeline",
             "Notifications", "Leads", "Opportunities", "Customer Support Tickets",
             "Reports", "Email Inbox", "Social Media Feeds", "Notes", "Custom Widgets",
@@ -66,19 +46,25 @@ public class CRMApplication {
             "User Management", "Billing", "Marketing Campaigns", "Feedback"
         };
 
-        for (String item : menuItems) {
-            JMenu menu = new JMenu(item);
-            menu.setForeground(Color.WHITE);
-            menu.setFont(new Font("Arial", Font.BOLD, 14));
-            menu.addMouseListener(new MenuHoverListener(menu));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-            JMenuItem menuItem = new JMenuItem(item);
-            menuItem.addActionListener(e -> displaySampleInfo(item));
-            menu.add(menuItem);
-            menuBar.add(menu);
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            button.setBackground(new Color(70, 130, 180));
+            button.setForeground(Color.WHITE);
+            button.setFont(new Font("Arial", Font.BOLD, 14));
+            button.addActionListener(e -> displaySampleInfo(label));
+            contentPanel.add(button, gbc);
+
+            gbc.gridx++;
+            if (gbc.gridx == 4) { // Adjust the number of columns as needed
+                gbc.gridx = 0;
+                gbc.gridy++;
+            }
         }
-
-        return menuBar;
     }
 
     private static JLabel createFooterLabel() {
@@ -99,24 +85,5 @@ public class CRMApplication {
         contentPanel.add(infoLabel);
         contentPanel.revalidate();
         contentPanel.repaint();
-    }
-
-    // Custom MouseListener for menu hover effects
-    private static class MenuHoverListener extends MouseAdapter {
-        private final JMenu menu;
-
-        public MenuHoverListener(JMenu menu) {
-            this.menu = menu;
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            menu.setForeground(Color.YELLOW);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            menu.setForeground(Color.WHITE);
-        }
     }
 }
