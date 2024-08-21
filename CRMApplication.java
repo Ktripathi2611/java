@@ -67,19 +67,23 @@ public class CRMApplication {
         sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
         sidebarPanel.setBackground(new Color(70, 130, 180));
 
-        String[] buttonLabels = {
-            "Dashboard", "Tasks", "Calendar", "Recent Activities", "Sales Pipeline",
-            "Notifications", "Leads", "Opportunities", "Customer Support Tickets",
-            "Reports", "Email Inbox", "Social Media Feeds", "Notes", "Custom Widgets",
-            "Contacts", "Analytics", "Settings", "Integrations", "Help & Support",
-            "User Management", "Billing", "Marketing Campaigns", "Feedback"
+        String[][] sections = {
+            {"Dashboard", "Tasks", "Calendar", "Recent Activities"},
+            {"Sales Pipeline", "Notifications", "Leads", "Opportunities"},
+            {"Customer Support Tickets", "Reports", "Email Inbox", "Social Media Feeds"},
+            {"Notes", "Custom Widgets", "Contacts", "Analytics"},
+            {"Settings", "Integrations", "Help & Support", "User Management"},
+            {"Billing", "Marketing Campaigns", "Feedback"}
         };
 
-        for (String label : buttonLabels) {
-            JButton button = new JButton(label);
-            styleButton(button);
-            button.addActionListener(e -> displaySampleInfo(label));
-            sidebarPanel.add(button);
+        for (String[] section : sections) {
+            for (String label : section) {
+                JButton button = new JButton(label);
+                styleButton(button);
+                button.addActionListener(e -> displaySampleInfo(label));
+                sidebarPanel.add(button);
+            }
+            sidebarPanel.add(Box.createVerticalStrut(10)); // Add space between sections
         }
 
         return sidebarPanel;
