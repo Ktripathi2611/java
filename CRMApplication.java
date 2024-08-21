@@ -6,13 +6,13 @@ public class CRMApplication {
     private static JPanel contentPanel;
     private static CardLayout cardLayout;
     private static JPanel mainPanel;
+    private static JPanel sidebarPanel;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(CRMApplication::createAndShowGUI);
     }
 
     private static void createAndShowGUI() {
-        // Create the frame
         JFrame frame = new JFrame("CRM Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -20,36 +20,27 @@ public class CRMApplication {
         frame.setResizable(true);
         frame.setBackground(new Color(245, 245, 245));
 
-        // Create the top panel with Back and Menu buttons
         JPanel topPanel = createTopPanel();
         frame.add(topPanel, BorderLayout.NORTH);
 
-        // Create the main panel with CardLayout
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
-        // Create and set the content panel
         contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-        // Add header to the content panel
         addHeaderToContentPanel();
 
-        // Add buttons to the content panel
-        addButtonsToContentPanel();
-
-        // Add content panel to main panel
         mainPanel.add(contentPanel, "ContentPanel");
-
-        // Add main panel to frame
         frame.add(mainPanel, BorderLayout.CENTER);
 
-        // Create and set the footer
+        sidebarPanel = createSidebarPanel();
+        frame.add(sidebarPanel, BorderLayout.WEST);
+
         JLabel footerLabel = createFooterLabel();
         frame.add(footerLabel, BorderLayout.SOUTH);
 
-        // Center the frame and display it
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -59,20 +50,39 @@ public class CRMApplication {
         topPanel.setBackground(new Color(245, 245, 245));
 
         JButton backButton = new JButton("Back");
-        backButton.setBackground(new Color(70, 130, 180));
-        backButton.setForeground(Color.WHITE);
-        backButton.setFont(new Font("Arial", Font.BOLD, 14));
+        styleButton(backButton);
         backButton.addActionListener(e -> goBack());
         topPanel.add(backButton, BorderLayout.WEST);
 
         JButton menuButton = new JButton("Menu");
-        menuButton.setBackground(new Color(70, 130, 180));
-        menuButton.setForeground(Color.WHITE);
-        menuButton.setFont(new Font("Arial", Font.BOLD, 14));
+        styleButton(menuButton);
         menuButton.addActionListener(e -> showMenu());
         topPanel.add(menuButton, BorderLayout.EAST);
 
         return topPanel;
+    }
+
+    private static JPanel createSidebarPanel() {
+        JPanel sidebarPanel = new JPanel();
+        sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
+        sidebarPanel.setBackground(new Color(70, 130, 180));
+
+        String[] buttonLabels = {
+            "Dashboard", "Tasks", "Calendar", "Recent Activities", "Sales Pipeline",
+            "Notifications", "Leads", "Opportunities", "Customer Support Tickets",
+            "Reports", "Email Inbox", "Social Media Feeds", "Notes", "Custom Widgets",
+            "Contacts", "Analytics", "Settings", "Integrations", "Help & Support",
+            "User Management", "Billing", "Marketing Campaigns", "Feedback"
+        };
+
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            styleButton(button);
+            button.addActionListener(e -> displaySampleInfo(label));
+            sidebarPanel.add(button);
+        }
+
+        return sidebarPanel;
     }
 
     private static void addHeaderToContentPanel() {
@@ -83,38 +93,8 @@ public class CRMApplication {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 4; // Span across all columns
+        gbc.gridwidth = 4;
         contentPanel.add(headerLabel, gbc);
-    }
-
-    private static void addButtonsToContentPanel() {
-        String[] buttonLabels = {
-            "Dashboard", "Tasks", "Calendar", "Recent Activities", "Sales Pipeline",
-            "Notifications", "Leads", "Opportunities", "Customer Support Tickets",
-            "Reports", "Email Inbox", "Social Media Feeds", "Notes", "Custom Widgets",
-            "Contacts", "Analytics", "Settings", "Integrations", "Help & Support",
-            "User Management", "Billing", "Marketing Campaigns", "Feedback"
-        };
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridx = 0;
-        gbc.gridy = 1; // Start from the second row
-
-        for (String label : buttonLabels) {
-            JButton button = new JButton(label);
-            button.setBackground(new Color(70, 130, 180));
-            button.setForeground(Color.WHITE);
-            button.setFont(new Font("Arial", Font.BOLD, 14));
-            button.addActionListener(e -> displaySampleInfo(label));
-            contentPanel.add(button, gbc);
-
-            gbc.gridx++;
-            if (gbc.gridx == 4) { // Adjust the number of columns as needed
-                gbc.gridx = 0;
-                gbc.gridy++;
-            }
-        }
     }
 
     private static JLabel createFooterLabel() {
@@ -144,5 +124,12 @@ public class CRMApplication {
 
     private static void showMenu() {
         cardLayout.show(mainPanel, "ContentPanel");
+    }
+
+    private static void styleButton(JButton button) {
+        button.setBackground(new Color(70, 130, 180));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 }
