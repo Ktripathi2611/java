@@ -113,11 +113,31 @@ public class CRMApplication {
 
     private static void displaySampleInfo(String item) {
         JPanel infoPanel = new JPanel(new BorderLayout());
-        JLabel infoLabel = new JLabel(item + " Content Here");
-        infoLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        infoLabel.setForeground(new Color(70, 130, 180));
-        infoPanel.add(infoLabel, BorderLayout.CENTER);
+        JTextArea infoTextArea = new JTextArea();
+        infoTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
+        infoTextArea.setForeground(new Color(70, 130, 180));
+        infoTextArea.setEditable(false);
 
+        switch (item) {
+            case "Dashboard":
+                infoTextArea.setText("Welcome to the Dashboard!\n\n- Total Sales: $1,234,567\n- New Leads: 123\n- Open Tickets: 45\n- Upcoming Meetings: 3");
+                break;
+            case "Tasks":
+                infoTextArea.setText("Tasks Overview:\n\n1. Follow up with client A\n2. Prepare sales report\n3. Update CRM system\n4. Schedule team meeting");
+                break;
+            case "Calendar":
+                infoTextArea.setText("Today's Events:\n\n- 10:00 AM: Team Standup\n- 1:00 PM: Client Meeting\n- 3:00 PM: Project Review");
+                break;
+            case "Recent Activities":
+                infoTextArea.setText("Recent Activities:\n\n- Called client B\n- Sent proposal to client C\n- Closed deal with client D");
+                break;
+            // Add more cases for other sections as needed
+            default:
+                infoTextArea.setText(item + " Content Here");
+                break;
+        }
+
+        infoPanel.add(new JScrollPane(infoTextArea), BorderLayout.CENTER);
         mainPanel.add(infoPanel, item);
         cardLayout.show(mainPanel, item);
     }
