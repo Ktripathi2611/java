@@ -39,8 +39,6 @@ The CRM Application is a Java-based desktop application designed to manage custo
 - **SIDEBAR_COLOR**: Light Olive Green
 - **HIGHLIGHT_COLOR**: Muted Olive Green
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Contact
 For any questions or feedback, please contact [thakurstuffsbykushal@gmail.com].
