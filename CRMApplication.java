@@ -1,12 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.swing.*;
-import java.io.*;
-import java.util.ArrayList;
 
 public class CRMApplication {
     private static JPanel contentPanel;
@@ -14,8 +8,6 @@ public class CRMApplication {
     private static JPanel mainPanel;
     private static JPanel sidebarPanel;
     private static String previousPanel = "DefaultPage"; // Track the previous panel for the back button
-    private static JTextArea historyArea; // History log for calculator
-    private static ArrayList<String> historyLog = new ArrayList<>(); // Store calculation history
 
     private static final Color PRIMARY_DARK = new Color(4, 13, 18); // Dark Blue-Gray
     private static final Color SECONDARY_DARK = new Color(24, 61, 61); // Teal Blue
@@ -25,10 +17,8 @@ public class CRMApplication {
 
     private static final String[] SECTIONS = {
         "Dashboard", "Sales Pipeline", "Customer Support Tickets", 
-        "Notes", "Settings", "Billing", "Summary", "Calculator"
+        "Notes", "Settings", "Billing", "Summary"
     };
-
-    private static final String HISTORY_FILE = "calculator_history.txt"; // File to store history
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(CRMApplication::createAndShowGUI);
@@ -98,8 +88,6 @@ public class CRMApplication {
     private static void handleSectionClick(String section) {
         if ("Summary".equals(section)) {
             displaySummaryPage();
-        } else if ("Calculator".equals(section)) {
-            displayCalculatorPage();
         } else {
             displaySectionPage(section);
         }
@@ -245,121 +233,5 @@ public class CRMApplication {
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setFocusPainted(false); // Prevent focus outline
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-    }
-
-    // Calculator Page
-    private static void displayCalculatorPage() {
-        JPanel calculatorPanel = new JPanel(new BorderLayout());
-        calculatorPanel.setBackground(SECONDARY_DARK);
-
-        // Calculator Display
-        JTextField displayField = new JTextField();
-        displayField.setEditable(false);
-        displayField.setFont(new Font("Arial", Font.BOLD, 32));
-        calculatorPanel.add(displayField, BorderLayout.NORTH);
-
-        // Button Panel
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 4, 10, 10));
-        String[] buttons = {"7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", "C", "=", "+"};
-        for (String text : buttons) {
-            JButton button = new JButton(text);
-            button.setFont(new Font("Arial", Font.BOLD, 24));
-            styleButton(button);
-            buttonPanel.add(button);
-            button.addActionListener(e -> handleCalculatorInput(displayField, button.getText()));
-        }
-        calculatorPanel.add(buttonPanel, BorderLayout.CENTER);
-
-        // History Log
-        historyArea = new JTextArea(10, 20);
-        historyArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(historyArea);
-        calculatorPanel.add(scrollPane, BorderLayout.EAST);
-
-        JPanel bottomButtonPanel = createCalculatorBottomPanel();
-        calculatorPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
-
-        // Load history on initialization
-        loadHistory();
-
-        mainPanel.add(calculatorPanel, "Calculator");
-        cardLayout.show(mainPanel, "Calculator");
-
-        previousPanel = "Calculator";
-    }
-
-    // Handle calculator inputs
-    private static void handleCalculatorInput(JTextField displayField, String input) {
-        if (input.equals("C")) {
-            displayField.setText("");
-        } else if (input.equals("=")) {
-            try {
-                String expression = displayField.getText();
-                double result = eval(expression);
-                displayField.setText(Double.toString(result));
-                String logEntry = expression + " = " + result;
-                historyLog.add(logEntry);
-                historyArea.append(logEntry + "\n");
-                saveHistory();
-            } catch (Exception e) {
-                displayField.setText("Error");
-            }
-        } else {
-            displayField.setText(displayField.getText() + input);
-        }
-    }
-
-    // Evaluate the mathematical expression
-    // Evaluate the mathematical expression
-private static double eval(String expression) throws ScriptException {
-    ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-    Object result = engine.eval(expression);
-    return Double.parseDouble(result.toString());
-}
-
-
-    // Load history from file
-    private static void loadHistory() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(HISTORY_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                historyLog.add(line);
-                historyArea.append(line + "\n");
-            }
-        } catch (IOException e) {
-            System.out.println("No history file found, starting fresh.");
-        }
-    }
-
-    // Save history to file
-    private static void saveHistory() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(HISTORY_FILE))) {
-            for (String log : historyLog) {
-                writer.write(log);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Create Calculator bottom panel with Reset History button
-    private static JPanel createCalculatorBottomPanel() {
-        JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(SECONDARY_DARK);
-
-        JButton resetButton = new JButton("Reset History");
-        styleButton(resetButton);
-        resetButton.addActionListener(e -> resetHistory());
-        panel.add(resetButton);
-
-        return panel;
-    }
-
-    // Reset the history log
-    private static void resetHistory() {
-        historyLog.clear();
-        historyArea.setText("");
-        saveHistory();
     }
 }
