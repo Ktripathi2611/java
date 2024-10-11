@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM System</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div><strong>CRM System</strong></div>
+        <div>
+            <a href="#">Dashboard</a>
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Menu</h3>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#leads">Leads Management</a>
+        <a href="#contacts">Contact Management</a>
+        <a href="#opportunities">Opportunities</a>
+        <a href="#reports">Reports</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard -->
+        <div id="dashboard" class="card">
+            <h2>Dashboard</h2>
+            <p>Overview of key metrics and recent activities.</p>
+            <div>
+                <strong>Total Leads:</strong> 120<br>
+                <strong>Opportunities:</strong> 75<br>
+                <strong>Tasks Due Today:</strong> 5
+            </div>
+        </div>
+
+        <!-- Leads Management -->
+        <div id="leads" class="card">
+            <h2>Leads Management</h2>
+            <table>
+                <tr>
+                    <th>Lead Name</th>
+                    <th>Contact</th>
+                    <th>Source</th>
+                    <th>Status</th>
+                    <th>Assigned Rep</th>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td>Website</td>
+                    <td>Contacted</td>
+                    <td>Jane Smith</td>
+                </tr>
+                <tr>
+                    <td>Alice Brown</td>
+                    <td>alice@example.com</td>
+                    <td>Referral</td>
+                    <td>New</td>
+                    <td>Chris Evans</td>
+                </tr>
+            </table>
+            <button class="btn">Add New Lead</button>
+        </div>
+
+        <!-- Contact Management -->
+        <div id="contacts" class="card">
+            <h2>Contact Management</h2>
+            <table>
+                <tr>
+                    <th>Contact Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Company</th>
+                    <th>Job Title</th>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane@example.com</td>
+                    <td>(123) 456-7890</td>
+                    <td>Acme Corp</td>
+                    <td>CEO</td>
+                </tr>
+                <tr>
+                    <td>Bob Jones</td>
+                    <td>bob@example.com</td>
+                    <td>(987) 654-3210</td>
+                    <td>Beta Ltd</td>
+                    <td>CTO</td>
+                </tr>
+            </table>
+            <button class="btn">Add New Contact</button>
+        </div>
+
+        <!-- Opportunities -->
+        <div id="opportunities" class="card">
+            <h2>Opportunities</h2>
+            <table>
+                <tr>
+                    <th>Opportunity Name</th>
+                    <th>Stage</th>
+                    <th>Value</th>
+                    <th>Expected Close Date</th>
+                    <th>Assigned Rep</th>
+                </tr>
+                <tr>
+                    <td>Website Redesign</td>
+                    <td>Proposal Sent</td>
+                    <td>$15,000</td>
+                    <td>2024-10-31</td>
+                    <td>Jane Smith</td>
+                </tr>
+                <tr>
+                    <td>CRM Integration</td>
+                    <td>Negotiation</td>
+                    <td>$25,000</td>
+                    <td>2024-11-15</td>
+                    <td>Chris Evans</td>
+                </tr>
+            </table>
+            <button class="btn">Add New Opportunity</button>
+        </div>
+
+        <!-- Reports -->
+        <div id="reports" class="card">
+            <h2>Reports</h2>
+            <p>Sales Performance, Lead Conversion, etc.</p>
+            <ul>
+                <li><a href="#">Monthly Sales Report</a></li>
+                <li><a href="#">Lead Conversion Report</a></li>
+                <li><a href="#">Customer Satisfaction Report</a></li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
